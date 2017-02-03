@@ -148,7 +148,8 @@ def main():
 
         # Determine the unique URL visits per session
         unique_url_visits = web_log_rdd.mapPartitions(urls_per_session).countApproxDistinct()
-        print unique_url_visits
+        with open('/home/esiu/unique_url_visits.txt') as phile:
+            phile.write(unique_url_visits)
 
         # IPs with the longest session times
         ip_with_session_time = sessionize.mapPartitions(session_time_per_ip).reduceByKey(compare_session_time)
